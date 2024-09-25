@@ -4,7 +4,9 @@ import LinkApp from "../components/LinkComponent";
 
 import { Container } from "./styles";
 
-import react_icon from "../assets/svg/react-svgrepo-com.svg"
+import react_icon from "../assets/svg/react-svgrepo-com.svg";
+
+import { UserProvider } from "./UserProvider";
 
 const Hooks = () => {
   const [count, setCount] = useState(0);
@@ -12,16 +14,16 @@ const Hooks = () => {
 
   const improve = () => {
     setCount((prevCount) => {
-    setString (`João tem contagem de ${prevCount + 1}`)
-    return prevCount + 1
+      setString(`João tem contagem de ${prevCount + 1}`);
+      return prevCount + 1;
     });
   };
 
   const decrease = () => {
     setCount((prevCount) => {
-      setString (`João tem contagem de ${prevCount - 1}`)
-      return prevCount - 1
-      });
+      setString(`João tem contagem de ${prevCount - 1}`);
+      return prevCount - 1;
+    });
   };
 
   return (
@@ -40,7 +42,7 @@ const Hooks = () => {
       <span>{count}</span>
       <span>{string}</span>
       <div className="linkContainer">
-        <LinkApp text="useContext" url="usecontext"/>
+        <LinkApp text="useContext" url="usecontext" />
       </div>
     </Container>
   );

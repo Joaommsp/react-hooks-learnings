@@ -1,9 +1,12 @@
 import AppRoutes from "./routes"
 
-function App() {
+import { UserProvider } from "./pages/UserProvider"
 
+function App() {
   return (
-    <AppRoutes />
+    <UserProvider>
+      <AppRoutes />
+    </UserProvider>
   )
 }
 
