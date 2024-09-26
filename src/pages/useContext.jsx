@@ -7,7 +7,11 @@ import { AppContext } from "./UserProvider";
 import react_icon from "../assets/svg/react-svgrepo-com.svg";
 
 const UseContext = () => {
-  const {user, setUser} = useContext(AppContext); 
+  const { user, setUser } = useContext(AppContext);
+
+  const changeName = () => {
+    setUser({ ...user, name: "João da Massa" });
+  };
 
   return (
     <Container>
@@ -17,6 +21,7 @@ const UseContext = () => {
       <div className="useContext-app">
         <div>{user.name}</div>
         <div>{user.age} anos</div>
+        <button onClick={changeName}>Mudar nome</button>
       </div>
       <div className="linkContainer_left">
         <LinkApp text="useState" url="" />

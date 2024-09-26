@@ -175,7 +175,6 @@ const ChildrenOne = () => {
   return (
     <div>
       <h1>{name}</h1>
-      <button onClick={() => setName("João da Massa")}>Mudar Nome</button>
     </div>
   );
 };
@@ -183,6 +182,40 @@ const ChildrenOne = () => {
 export default ChildrenOne;
 ```
 
+### Criando um elemento capaz de alterar os values do contexto
+
+<img src="./public/readme/useContext-provider.png" alt="...">
+
+<br/>
+
+<ul>
+    <li><strong>AppContext</strong>: É o contexto que você criou para compartilhar dados (neste caso, o estado do usuário) entre os componentes.</li>
+    <li><strong>UserProvider</strong>: É o componente que vai fornecer (<code>user</code> e <code>setUser</code>) para todos os componentes dentro dele.</li>
+    <li><strong>useState</strong>: Mantém o estado do <code>user</code> e a função <code>setUser</code> permite atualizar esse estado.</li>
+    <li>Qualquer componente dentro do <strong>UserProvider</strong> pode acessar e modificar o estado do <code>user</code> usando o <code>useContext(AppContext)</code>.</li>
+</ul>
+
+### Provendo o contexto para toda a aplicação
+
+<img src="./public/readme/useContext-app.png" alt="...">
+
+### Consumindo o contexto no elemento filho
+
+<img src="./public/readme/useContext-children.png" alt="...">
+
+### Spread Operator
+
+```js
+setUser({ ...user, name: "Maria Silva" });
+```
+
+<ul>
+    <li><strong>setUser</strong>: Esta é a função que foi obtida a partir do <code>useState</code>, ou do contexto, e é usada para atualizar o estado do <code>user</code>.</li>
+    <li><strong>{ ...user }</strong>: Isso é chamado de <em>spread operator</em>. Ele copia todas as propriedades existentes do objeto <code>user</code> para um novo objeto.</li>
+    <li>Por exemplo, se o <code>user</code> tem <code>{ name: "João Marcos", age: 21 }</code>, o operador de spread cria uma cópia dessas propriedades.</li>
+    <li><strong>name: "João da Massa"</strong>: Aqui, você está sobrescrevendo a propriedade <code>name</code> do objeto copiado, mudando seu valor para "João da Massa".</li>
+    <li>O resultado final é um novo objeto com todas as propriedades anteriores do <code>user</code>, exceto que o <code>name</code> foi atualizado para "João da Massa".</li>
+</ul>
 
 ###
 

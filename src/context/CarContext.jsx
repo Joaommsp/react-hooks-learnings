@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const CarContext = createContext(null);
 
 // eslint-disable-next-line react/prop-types
-const CarProvider = ({ children }) => {
+export const CarProvider = ({ children }) => {
   const [car, setCar] = useState("Camaro");
 
   return (
@@ -12,5 +12,3 @@ const CarProvider = ({ children }) => {
     </CarContext.Provider>
   );
 };
-
-export default CarProvider;

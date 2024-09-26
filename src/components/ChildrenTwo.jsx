@@ -1,11 +1,11 @@
+import useCarContext from "../hook/useCarContext";
 
-
-// eslint-disable-next-line react/prop-types
-const ChildrenTwo = ({user, setUser}) => {
+const ChildrenTwo = () => {
+  const { car, setCar } = useCarContext;
 
   return (
-    <button onClick={() => setUser("João da Massa")}>Mude o nome do usuário</button>
-  )
-}
+    <button onClick={() => setCar("Mustang")}>Mude o nome do veículo</button>
+  );
+};
 
-export default ChildrenTwo
+export default ChildrenTwo;

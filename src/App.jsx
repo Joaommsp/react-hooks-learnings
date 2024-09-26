@@ -1,13 +1,13 @@
-import AppRoutes from "./routes"
+import AppRoutes from "./routes";
 
-import { UserProvider } from "./pages/UserProvider"
+import { UserProvider } from "./pages/UserProvider";
 
 function App() {
   return (
     <UserProvider>
-      <AppRoutes />
+        <AppRoutes />
     </UserProvider>
-  )
+  );
 }
 
-export default App
+export default App;
