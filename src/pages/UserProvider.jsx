@@ -1,13 +1,13 @@
-import { createContext, useState } from "react";
+import { useState } from "react";
 
-export const AppContext = createContext();
+import { AppContext } from "../hook/useUseContext";
 
 // eslint-disable-next-line react/prop-types
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({name:"João Marcos", age: 21,});
+  const [user, setUser] = useState({ name: "João Marcos", age: 21 });
 
   return (
-    <AppContext.Provider value={{user, setUser}}>
+    <AppContext.Provider value={{ user, setUser }}>
       {children}
     </AppContext.Provider>
   );

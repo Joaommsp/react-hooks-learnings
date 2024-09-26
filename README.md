@@ -17,7 +17,18 @@
 
 ### Hooks de Gerenciamento de estados
 
-<strong>useState</strong>
+<ul>
+  <li>useState ✓</li>
+  <li>useReducer</li>
+  <li>useContext ✓</li>
+  <li>useRef</li>
+  <li>useImperativeHandle</li>
+  <li>useSyncExternalStore</li>
+  <li>useEffect</li>
+  <li>useLayoutEffect</li>
+</ul>
+
+# useState
 
 <div>Gerencia estados atômicos do componente:</div>
 <div>
@@ -91,7 +102,7 @@ const improve = () => {
 
 <img src="./public/readme/useState-screen-02.jpeg" alt="...">
 
-<strong>useContext</strong>
+# useContext
 
 <div>
 Ele permite compartilhar dados entre vários componentes sem precisar passar as informações manualmente por cada nível (props drilling).
@@ -217,7 +228,60 @@ setUser({ ...user, name: "Maria Silva" });
     <li>O resultado final é um novo objeto com todas as propriedades anteriores do <code>user</code>, exceto que o <code>name</code> foi atualizado para "João da Massa".</li>
 </ul>
 
-###
+<img src="./public/readme/provider.png" alt="...">
+
+<img src="./public/readme/MacBook Pro-1727314716815.jpeg" alt="...">
+
+<img src="./public/readme/MacBook Pro-1727314722514.jpeg" alt="...">
+
+### Usando um Custom Hook
+
+<img src="./public/readme/custom-context-hook.png" alt="...">
+
+<strong>Criação do Contexto:</strong>
+
+```js
+export const AppContext = createContext(undefined);
+```
+
+Cria um contexto (AppContext) com valor inicial undefined.
+<strong>
+Hook Personalizado useUserContext:
+</strong>
+
+```js
+export function useUserContext() {
+  const { user, setUser } = useContext(AppContext);
+}
+```
+
+Acessa os valores user e setUser do contexto.
+
+<strong>Verificação de Contexto:</strong>
+
+```js
+if (user == undefined || setUser == undefined) {
+  throw new Error("Component out of context");
+}
+```
+
+Lança um erro se user ou setUser não estiverem disponíveis, garantindo que o componente esteja dentro do Provider.
+
+<strong>Retorno</strong>
+
+```js
+return { user, setUser };
+```
+
+### Gerando o provider com o Custom Hook
+
+<img src="./public/readme/custom-context-hook-provider-assist.png" alt="...">
+
+<br/>
+
+# useEffect
+
+<p>Permite a criação de reações nas etapas do ciclo de vida do componente</p>
 
 ### React + Vite
 

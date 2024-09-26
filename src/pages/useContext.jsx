@@ -1,13 +1,11 @@
-import { useContext } from "react";
 import LinkApp from "../components/LinkComponent";
 import { Container } from "./styles";
-
-import { AppContext } from "./UserProvider";
+import { useUserContext } from "../hook/useUseContext";
 
 import react_icon from "../assets/svg/react-svgrepo-com.svg";
 
 const UseContext = () => {
-  const { user, setUser } = useContext(AppContext);
+  const { user, setUser } = useUserContext();
 
   const changeName = () => {
     setUser({ ...user, name: "João da Massa" });
@@ -25,6 +23,9 @@ const UseContext = () => {
       </div>
       <div className="linkContainer_left">
         <LinkApp text="useState" url="" />
+      </div>
+      <div className="linkContainer">
+        <LinkApp text="useEffect" url="useeffect" />
       </div>
     </Container>
   );
