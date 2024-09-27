@@ -6,8 +6,6 @@ import { Container } from "./styles";
 
 import react_icon from "../assets/svg/react-svgrepo-com.svg";
 
-import { UserProvider } from "./UserProvider";
-
 const Hooks = () => {
   const [count, setCount] = useState(0);
   const [string, setString] = useState("João tem contagem de 0");

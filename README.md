@@ -24,7 +24,7 @@
   <li>useRef</li>
   <li>useImperativeHandle</li>
   <li>useSyncExternalStore</li>
-  <li>useEffect</li>
+  <li>useEffect ✓</li>
   <li>useLayoutEffect</li>
 </ul>
 
@@ -282,6 +282,36 @@ return { user, setUser };
 # useEffect
 
 <p>Permite a criação de reações nas etapas do ciclo de vida do componente</p>
+
+<img src="./public/readme/ciclo-de-vida-componente-react.png" alt="...">
+
+### Criando um useEffect para um estado
+
+<img src="./public/readme/code-useEffect-estado.png" alt="...">
+
+### Criando um useEffect para inicialização
+
+Para que o useEffect seja executado apenas na inicialização do componente , precisa passar um array de dependências vazio ([]) como segundo argumento. I
+
+```js
+useEffect(() => {
+  console.log("Estado de inicialização");
+  changeState();
+}, []);
+```
+
+### Criando um useEffect para destruição do componente
+Para executar uma função na destruição de um componente usando o useEffect,use um return dentro do useEffect.
+
+```js
+useEffect(() => {
+  // Código executado quando o componente é montado
+
+  return () => {
+    // Código executado quando o componente é desmontado (cleanup)
+  };
+}, []); // O array de dependências vazio garante que o efeito só execute na montagem e na desmontagem
+```
 
 ### React + Vite
 

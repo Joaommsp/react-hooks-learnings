@@ -67,10 +67,16 @@ export const Container = styled.div`
     position: fixed;
     right: 2rem;
   }
-  
 
   .linkContainer_left {
     position: fixed;
     left: 2rem;
   }
-  `;
+
+  .useEffect_states {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
