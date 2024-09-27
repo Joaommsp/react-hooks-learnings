@@ -301,6 +301,7 @@ useEffect(() => {
 ```
 
 ### Criando um useEffect para destruição do componente
+
 Para executar uma função na destruição de um componente usando o useEffect,use um return dentro do useEffect.
 
 ```js
@@ -312,6 +313,20 @@ useEffect(() => {
   };
 }, []); // O array de dependências vazio garante que o efeito só execute na montagem e na desmontagem
 ```
+
+### Criando um Hook Personalizado
+
+### Componente sem o Hook personalizado
+
+<img src="./public/readme/custom-hook-no-custom-hook.png" alt="...">
+
+### Criando um hook Personalizado
+
+<img src="./public/readme/custom-hook.png" alt="...">
+
+### Utilizando o hook Personalizado
+
+<img src="./public/readme/custom-hook-w-custom-hook.png" alt="...">
 
 ### React + Vite
 

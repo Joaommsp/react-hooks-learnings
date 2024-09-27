@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useCounter from "../hook/useCounting";
 
 import LinkApp from "../components/LinkComponent";
 
@@ -7,22 +8,7 @@ import { Container } from "./styles";
 import react_icon from "../assets/svg/react-svgrepo-com.svg";
 
 const Hooks = () => {
-  const [count, setCount] = useState(0);
-  const [string, setString] = useState("João tem contagem de 0");
-
-  const improve = () => {
-    setCount((prevCount) => {
-      setString(`João tem contagem de ${prevCount + 1}`);
-      return prevCount + 1;
-    });
-  };
-
-  const decrease = () => {
-    setCount((prevCount) => {
-      setString(`João tem contagem de ${prevCount - 1}`);
-      return prevCount - 1;
-    });
-  };
+  const { count, string, improve, decrease } = useCounter();
 
   return (
     <Container>
