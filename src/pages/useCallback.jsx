@@ -1,27 +1,28 @@
-import { useReducer } from "react";
+import { useCallback } from "react";
+
+import Child01 from "../childrensUseCallback/child01";
+import Child02 from "../childrensUseCallback/child02";
 
 import LinkApp from "../components/LinkComponent";
 
 import { Container } from "./styles";
 
 import react_icon from "../assets/svg/react-svgrepo-com.svg";
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "increment":
-      return { ...state, count: state.count + 1, name: "João da Massa" };
-    case "decrement":
-      return { ...state, count: state.count - 1, name: "João da Banana" };
-    case "reset":
-      return { ...state, count: (state.count = 0), name: "João" };
-    default:
-      return state;
-  }
-};
+import { useState } from "react";
 
 const UseCallback = () => {
-  const initialState = { count: 0, name: "João" };
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [value, setValue] = useState(1);
+  const [value2, setValue2] = useState(1);
+
+  const handleIncrement1 = useCallback(() => {
+    setValue((prev) => prev + 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  const handleIncrement2 = useCallback(() => {
+    setValue2((prev) => prev + 1);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value2]);
 
   return (
     <Container>
@@ -31,25 +32,21 @@ const UseCallback = () => {
       <div className="buttons">
         <button
           className="button-state"
-          onClick={() => dispatch({ type: "increment" })}
+          onClick={() => setValue((prev) => prev + 1)}
         >
-          Incrementar
+          INCREMENTAR 01 SEM FUNCÃO
         </button>
         <button
           className="button-state"
-          onClick={() => dispatch({ type: "decrement" })}
+          onClick={() => setValue2((prev) => prev + 1)}
         >
-          Decrementar
-        </button>
-        <button
-          className="button-state"
-          onClick={() => dispatch({ type: "reset" })}
-        >
-          Resetar
+          INCREMENTAR 02 SEM FUNCÃO
         </button>
       </div>
-      <span>{state.count}</span>
-      <span>{state.name}</span>
+      <div className="childrens">
+        <Child01 value={value} setValue={handleIncrement1} />
+        <Child02 value={value2} setValue={handleIncrement2} />
+      </div>
       <div className="linkContainer_left">
         <LinkApp text="useReduce" url="usereduce" />
       </div>

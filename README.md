@@ -31,8 +31,8 @@
 <ul>
  <li>useEffect ✓</li>
    <li>useLayoutEffect ✓</li>
-   <li>useCallback </li>
-   <li>useMemo</li>
+   <li>useCallback ✓</li>
+   <li>useMemo ✓</li>
 </ul>
 
 # useState
@@ -587,9 +587,58 @@ export default UseLayoutEffect;
 
 Como o código que altera isAdmin agora está no useLayoutEffect, ele é aplicado imediatamente antes da interface ser exibida, o que pode evitar mudanças inesperadas no layout durante a renderização
 
-# useCallback
+# useCallback + memo
 
 serve para memorizar (ou "cachear") funções, evitando que elas sejam recriadas em cada renderização. Ele é especialmente útil quando você passa funções para componentes filhos ou quando funções são usadas como dependências em hooks como useEffect, evitando renderizações e execuções desnecessárias.
+
+### memo
+
+Memoriza um componente inteiro para evitar sua re-renderização desnecessária. O memo é uma função de ordem superior (HOC - Higher Order Component) que envolve um componente <strong>e só o re-renderiza se as suas props mudarem.</strong>
+
+```js
+import { memo } from "react";
+
+import { Container } from "./styles";
+
+// eslint-disable-next-line react/prop-types
+const Child01 = ({ value, setValue }) => {
+  console.log("C1 renderizado");
+
+  return (
+    <Container>
+      {value}
+      {/* <button onClick={setValue}>Incrementar01</button> */}
+    </Container>
+  );
+};
+
+export default memo(Child01);
+```
+
+<img src="./public/readme/memo-ex.png" alt="...">
+
+### Utilziando o UseCallback para evitar re-enderizações com funções
+
+As função sempre são declaradas mesmo que o valor do return seja igual, no JS elas vão entrar em um
+espaço de memória, que nunca será o mesmo, utiliza-se o callback para guardar essas funções em cache e evitar a re-renderização.
+
+### Componente pai (sem useCallback)
+
+<img src="./public/readme/parent-usecallback.png" alt="...">
+
+### Componente filho 1
+
+<img src="./public/readme/child01-usecallback.png" alt="...">
+
+### Componente filho 2
+
+<img src="./public/readme/child02-usecallback.png" alt="...">
+
+Tudo será re-renderizado por conta das funções
+
+### Melhorando com o useCallBack
+
+<img src="./public/readme/usecallback-correct.png" alt="...">
 
 ### Criando um Hook Personalizado
 
