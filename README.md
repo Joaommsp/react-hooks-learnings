@@ -587,6 +587,10 @@ export default UseLayoutEffect;
 
 Como o código que altera isAdmin agora está no useLayoutEffect, ele é aplicado imediatamente antes da interface ser exibida, o que pode evitar mudanças inesperadas no layout durante a renderização
 
+# useCallback
+
+serve para memorizar (ou "cachear") funções, evitando que elas sejam recriadas em cada renderização. Ele é especialmente útil quando você passa funções para componentes filhos ou quando funções são usadas como dependências em hooks como useEffect, evitando renderizações e execuções desnecessárias.
+
 ### Criando um Hook Personalizado
 
 ### Componente sem o Hook personalizado

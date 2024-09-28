@@ -6,6 +6,7 @@ import UseEffect from "./pages/useEffect";
 import UseRef from "./pages/useRef";
 import UseLayoutEffect from "./pages/useLayoutEffect";
 import UseReduce from "./pages/useReduce";
+import UseCallback from "./pages/useCallback";
 
 const AppRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
         <Route path="/useref" element={<UseRef />} />
         <Route path="/uselayouteffect" element={<UseLayoutEffect />} />
         <Route path="/usereduce" element={<UseReduce />} />
+        <Route path="/usecallback" element={<UseCallback />} />
       </Routes>
     </BrowserRouter>
   );

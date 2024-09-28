@@ -19,7 +19,7 @@ const reducer = (state, action) => {
   }
 };
 
-const UseReduce = () => {
+const UseCallback = () => {
   const initialState = { count: 0, name: "João" };
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -27,7 +27,7 @@ const UseReduce = () => {
     <Container>
       <img className="logo-react" src={react_icon} alt="..." />
       <h1>React Hooks</h1>
-      <span className="hook-type">useReduce</span>
+      <span className="hook-type">useCallback</span>
       <div className="buttons">
         <button
           className="button-state"
@@ -51,7 +51,7 @@ const UseReduce = () => {
       <span>{state.count}</span>
       <span>{state.name}</span>
       <div className="linkContainer_left">
-        <LinkApp text="useLayoutEffect" url="uselayouteffect" />
+        <LinkApp text="useReduce" url="usereduce" />
       </div>
       <div className="linkContainer">
         <LinkApp text="useCallback" url="usecallback" />
@@ -60,4 +60,4 @@ const UseReduce = () => {
   );
 };
 
-export default UseReduce;
+export default UseCallback;
