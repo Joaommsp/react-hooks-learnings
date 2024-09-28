@@ -40,6 +40,9 @@ const UseEffect = () => {
       <div className="linkContainer_left">
         <LinkApp text="useContext" url="usecontext" />
       </div>
+      <div className="linkContainer">
+        <LinkApp text="useRef" url="useref" />
+      </div>
     </Container>
   );
 };

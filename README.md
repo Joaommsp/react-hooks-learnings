@@ -19,13 +19,20 @@
 
 <ul>
   <li>useState ✓</li>
-  <li>useReducer</li>
+  <li>useReducer ✓</li>
   <li>useContext ✓</li>
-  <li>useRef</li>
+  <li>useRef ✓</li>
   <li>useImperativeHandle</li>
   <li>useSyncExternalStore</li>
-  <li>useEffect ✓</li>
-  <li>useLayoutEffect</li>
+</ul>
+
+### Hooks de Gerenciamento de Ciclo de Vida
+
+<ul>
+ <li>useEffect ✓</li>
+   <li>useLayoutEffect ✓</li>
+   <li>useCallback </li>
+   <li>useMemo</li>
 </ul>
 
 # useState
@@ -279,6 +286,117 @@ return { user, setUser };
 
 <br/>
 
+# useRef
+
+### Diferença entre o useState
+
+<ul>
+  <li>Use <code>useState</code> quando você precisar que uma mudança de valor desencadeie uma re-renderização.</li>
+  <li>Use <code>useRef</code> quando quiser armazenar um valor persistente entre renderizações sem que mudanças nele causem re-renderizações.</li>
+</ul>
+
+### Para oq usar ?
+
+Acessar e manipular diretamente elementos do DOM: Se você precisar manipular elementos HTML diretamente, como focar em um input, useRef é perfeito.
+
+<p>Ref é muito usado em Formulários</p>
+
+```js
+const inputRef = useRef(null);
+
+// Alterar o valor não causa re-renderização
+inputRef.current = "novo valor";
+```
+
+### Acessando o valor
+
+Basta apenas utilizar o `.current`
+
+### Manipulando a DOM
+
+Como já foi dito o principal uso do useRef é manipulando DOM
+
+```js
+const buttonRef = useRef(0);
+
+useEffect(() => {
+  buttonRef.current.click();
+}, []);
+```
+
+### Exemplo de manipulação com um input
+
+<img src="./public/readme/useRef-input-ex.png" alt="...">
+
+Dessa maneira sempre que aplicação for carregada(ou re-renderizada), ocorrerá o `focus` no input
+
+# useReducer
+
+<p>
+   useReducer é um hook do React utilizado para gerenciamento de estado, especialmente em cenários onde o estado é complexo ou envolve múltiplas transições baseadas em diferentes ações. Ele é inspirado no padrão de reducers do Redux e funciona de forma semelhante a uma máquina de estados.
+</p>
+
+<p>Enquanto o useState é ideal para gerenciar estados simples, o useReducer oferece mais controle e estrutura para manipular estados que envolvem várias ações e lógicas.</p>
+
+<img src="./public/readme/use-reduce.png" alt="...">
+
+<ul>
+  <li><strong>Estado inicial:</strong> O estado inicial <code>{ count: 0 }</code> é passado para o <code>useReducer</code>.</li>
+  <li><strong>Função reducer:</strong>
+    <ul>
+      <li>A função <code>reducer</code> verifica o tipo da ação (<code>increment</code>, <code>decrement</code> ou <code>reset</code>) e, com base nisso, retorna um novo estado.</li>
+      <li>O estado é imutável, então a função sempre cria um novo estado em vez de modificar o estado existente.</li>
+    </ul>
+  </li>
+  <li><strong>Dispatch:</strong>
+    <ul>
+      <li>O <code>dispatch</code> dispara ações para o <code>reducer</code>, que calcula o novo estado.</li>
+      <li>Exemplo: Quando o botão "Incrementar" é clicado, ele dispara a ação <code>{ type: 'increment' }</code>, e o estado é atualizado.</li>
+    </ul>
+  </li>
+</ul>
+
+```js
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "increment":
+      return { count: state.count + 1, name: "João da Massa" };
+    case "decrement":
+      return { count: state.count - 1, name: "João da Banana" };
+    case "reset":
+      return { count: (state.count = 0), name: "João" };
+    default:
+      return state;
+  }
+};
+```
+
+```js
+const initialState = { count: 0, name: "João" };
+const [state, dispatch] = useReducer(reducer, initialState);
+```
+
+```js
+<button
+          className="button-state"
+          onClick={() => dispatch({ type: "increment" })}
+        >
+          Incrementar
+        </button>
+        <button
+          className="button-state"
+          onClick={() => dispatch({ type: "decrement" })}
+        >
+          Decrementar
+        </button>
+        <button
+          className="button-state"
+          onClick={() => dispatch({ type: "reset" })}
+        >
+          Resetar
+        </button>
+```
+
 # useEffect
 
 <p>Permite a criação de reações nas etapas do ciclo de vida do componente</p>
@@ -300,6 +418,8 @@ useEffect(() => {
 }, []);
 ```
 
+<img src="./public/readme/MacBook Pro-1727469655318.jpeg"  alt="...">
+
 ### Criando um useEffect para destruição do componente
 
 Para executar uma função na destruição de um componente usando o useEffect,use um return dentro do useEffect.
@@ -313,6 +433,159 @@ useEffect(() => {
   };
 }, []); // O array de dependências vazio garante que o efeito só execute na montagem e na desmontagem
 ```
+
+# useLayoutEffect
+
+O `useLayoutEffect` é um hook do React que funciona de maneira semelhante ao useEffect, mas com uma diferença crucial: ele é executado sincronamente após as mudanças no DOM, antes que o navegador faça a pintura na tela. Isso significa que o código dentro de useLayoutEffect é executado logo após o React ter atualizado o DOM, mas antes que o usuário veja essas mudanças visuais.
+
+### Quando usar
+
+O useLayoutEffect é útil em situações onde você precisa realizar algum efeito que depende do layout final da página, como medir a posição ou o tamanho de um elemento no DOM e imediatamente tomar alguma ação baseada nessas medidas.
+
+```js
+import React, { useLayoutEffect, useRef, useState } from "react";
+
+function ComponenteExemplo() {
+  const divRef = useRef(null);
+  const [altura, setAltura] = useState(0);
+
+  useLayoutEffect(() => {
+    // Medimos a altura da div e atualizamos o estado
+    const alturaDiv = divRef.current.getBoundingClientRect().height;
+    setAltura(alturaDiv);
+  }, []); // Dependência vazia para rodar apenas uma vez após o layout ser calculado
+
+  return (
+    <div>
+      <div ref={divRef} style={{ height: "200px", background: "lightblue" }}>
+        Esta div tem 200px de altura.
+      </div>
+      <p>A altura da div é: {altura}px</p>
+    </div>
+  );
+}
+export default ComponenteExemplo;
+```
+
+### Exemplo sem useLayoutEffect
+
+```js
+import { useEffect, useRef, useState, useLayoutEffect } from "react";
+
+import LinkApp from "../components/LinkComponent";
+
+import { Container } from "./styles";
+
+const userIDs = [1, 2];
+
+import react_icon from "../assets/svg/react-svgrepo-com.svg";
+
+const UseLayoutEffect = () => {
+  const [userID, setUserID] = useState(userIDs[0]);
+  const [isAdmin, setIsAdmin] = useState(true);
+
+  let now = performance.now();
+  while (performance.now() - now < 200) {
+    // nothing yet
+  }
+
+  useEffect(() => {
+    setIsAdmin(userID === userIDs[0]);
+  }, [userID]);
+
+  const handleChange = () => {
+    const otherID = userIDs.find((id) => id !== userID);
+    setUserID(otherID);
+  };
+
+  return (
+    <Container>
+      <img className="logo-react" src={react_icon} alt="..." />
+      <h1>React Hooks</h1>
+      <span className="hook-type">useLayoutEffect</span>
+      <div className="buttons">
+        <button className="button-state" onClick={handleChange}>
+          Mudar
+        </button>
+      </div>
+      <span>userID: {userID}</span>
+      <span>Admin: {isAdmin ? "true" : "false"}</span>
+      <span></span>
+      <div className="linkContainer_left">
+        <LinkApp text="useRef" url="useref" />
+      </div>
+      <div className="linkContainer">
+        <LinkApp text="useLayoutEffect" url="uselayouteffect" />
+      </div>
+    </Container>
+  );
+};
+
+export default UseLayoutEffect;
+```
+
+O problema do código atual é que a alteração no estado isAdmin ocorre no useEffect, que é assíncrono e roda após a renderização. Se você precisar que essa mudança no estado ocorra antes que o navegador faça o "paint" (pintura) da tela, você pode usar o useLayoutEffect. Isso garantirá que a mudança de isAdmin seja sincronizada com a renderização e o layout e sem bugs visuais.
+
+### Agora com o useLayoutEffect
+
+```js
+import { useLayoutEffect, useRef, useState } from "react";
+
+import LinkApp from "../components/LinkComponent";
+
+import { Container } from "./styles";
+
+const userIDs = [1, 2];
+
+import react_icon from "../assets/svg/react-svgrepo-com.svg";
+
+const UseLayoutEffect = () => {
+  const [userID, setUserID] = useState(userIDs[0]);
+  const [isAdmin, setIsAdmin] = useState(true);
+
+  // Simula uma operação lenta
+  let now = performance.now();
+  while (performance.now() - now < 200) {
+    // Bloqueio proposital por 200ms
+  }
+
+  // Substituindo useEffect por useLayoutEffect para garantir
+  // que a mudança de isAdmin ocorra antes da renderização.
+  useLayoutEffect(() => {
+    setIsAdmin(userID === userIDs[0]);
+  }, [userID]);
+
+  const handleChange = () => {
+    const otherID = userIDs.find((id) => id !== userID);
+    setUserID(otherID);
+  };
+
+  return (
+    <Container>
+      <img className="logo-react" src={react_icon} alt="..." />
+      <h1>React Hooks</h1>
+      <span className="hook-type">useLayoutEffect</span>
+      <div className="buttons">
+        <button className="button-state" onClick={handleChange}>
+          Mudar
+        </button>
+      </div>
+      <span>userID: {userID}</span>
+      <span>Admin: {isAdmin ? "true" : "false"}</span>
+      <div className="linkContainer_left">
+        <LinkApp text="useRef" url="useref" />
+      </div>
+      <div className="linkContainer">
+        <LinkApp text="useLayoutEffect" url="uselayouteffect" />
+      </div>
+    </Container>
+  );
+};
+
+export default UseLayoutEffect;
+```
+
+Como o código que altera isAdmin agora está no useLayoutEffect, ele é aplicado imediatamente antes da interface ser exibida, o que pode evitar mudanças inesperadas no layout durante a renderização
 
 ### Criando um Hook Personalizado
 
@@ -328,7 +601,7 @@ useEffect(() => {
 
 <img src="./public/readme/custom-hook-w-custom-hook.png" alt="...">
 
-### React + Vite
+# React + Vite
 
 Este template fornece uma configuração mínima para fazer o React funcionar no Vite com HMR e algumas regras do ESLint.
 
