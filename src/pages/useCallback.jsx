@@ -51,7 +51,7 @@ const UseCallback = () => {
         <LinkApp text="useReduce" url="usereduce" />
       </div>
       <div className="linkContainer">
-        <LinkApp text="useCallback" url="usecallback" />
+        <LinkApp text="useMemo" url="usememo" />
       </div>
     </Container>
   );

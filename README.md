@@ -640,7 +640,127 @@ Tudo será re-renderizado por conta das funções
 
 <img src="./public/readme/usecallback-correct.png" alt="...">
 
-### Criando um Hook Personalizado
+# useMemo
+
+É usado para otimizar cálculos ou funções pesadas dentro de um componente.
+Envolve valores calculados que não precisam ser recalculados toda vez que o componente renderiza, mas somente quando suas dependências mudam.
+
+### Componente com problemas de performance
+
+```js
+import LinkApp from "../components/LinkComponent";
+
+import { Container } from "./styles";
+
+import react_icon from "../assets/svg/react-svgrepo-com.svg";
+import { useState } from "react";
+
+import { largeData } from "../largeData/largeDate";
+
+const UseMemo = () => {
+  const [count, setCount] = useState(0);
+  const [items] = useState(largeData);
+
+  function increment() {
+    setCount((prev) => prev + 1);
+  }
+
+  // Esta função busca elemento dentro de um ARRAY de 3000 elementos, buscando o ID 2990, aqui ela sempre é executada em todas as renderizações que a mudança do COUNT ocasiona
+  const selectedItem = items.find((item) => {
+    console.log("Recalculando");
+    return item.isActive;
+  });
+
+  return (
+    <Container>
+      <img className="logo-react" src={react_icon} alt="..." />
+      <h1>React Hooks</h1>
+      <span className="hook-type">useMemo</span>
+      <div className="buttons">
+        <button className="button-state" onClick={increment}>
+          Incrementar
+        </button>
+      </div>
+      <div className="childrens">
+        <span>{count}</span>
+      </div>
+      <div className="childrens">
+        <span>Active: {selectedItem?.isActive ? "true" : "false"}</span>
+      </div>
+      <div className="linkContainer_left">
+        <LinkApp text="useCallBack" url="usecallback" />
+      </div>
+    </Container>
+  );
+};
+
+<img src="./public/readme/use-memo-no.png" alt="...">
+O função está sendo rodada todas as vezes que o count muda. Oque não está correto e causa lentidão
+
+export default UseMemo;
+```
+
+### Por que o useCallback não resolve ?
+
+Por que o valor do COUNT sempre está mudando, porém o resultado do cálculo não muda
+
+### Melhorando com o useMemo
+
+```js
+import LinkApp from "../components/LinkComponent";
+
+import { Container } from "./styles";
+
+import react_icon from "../assets/svg/react-svgrepo-com.svg";
+import { useMemo, useState } from "react";
+
+import { largeData } from "../largeData/largeDate";
+
+const UseMemo = () => {
+  const [count, setCount] = useState(0);
+  const [items] = useState(largeData);
+
+  function increment() {
+    setCount((prev) => prev + 1);
+  }
+
+  // Aqui nesta função, o resultado será armazenado em cache
+  const selectedItem = useMemo(
+    () =>
+      items.find((item) => {
+        console.log("Recalculando");
+        return item.isActive;
+      }),
+    [items]
+  );
+
+  return (
+    <Container>
+      <img className="logo-react" src={react_icon} alt="..." />
+      <h1>React Hooks</h1>
+      <span className="hook-type">useMemo</span>
+      <div className="buttons">
+        <button className="button-state" onClick={increment}>
+          Incrementar
+        </button>
+      </div>
+      <div className="childrens">
+        <span>{count}</span>
+      </div>
+      <div className="childrens">
+        <span>Active: {selectedItem?.isActive ? "true" : "false"}</span>
+      </div>
+      <div className="linkContainer_left">
+        <LinkApp text="useCallBack" url="usecallback" />
+      </div>
+    </Container>
+  );
+};
+
+export default UseMemo;
+```
+
+# Criando um Hook Personalizado
 
 ### Componente sem o Hook personalizado
 
